@@ -16,7 +16,7 @@
 <meta property="og:description" content="在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion CaptureRedY2647  *本文假设使用者已采集身体骨骼数据（即动捕或直接文件输入骨骼数据）并能够将骨骼数据传入Unity驱动模型">
 <meta property="og:locale" content="ch">
 <meta property="article:published_time" content="2021-09-10T13:10:21.076Z">
-<meta property="article:modified_time" content="2021-09-10T13:11:21.132Z">
+<meta property="article:modified_time" content="2021-09-11T06:30:36.281Z">
 <meta property="article:author" content="Red Young">
 <meta name="twitter:card" content="summary">
   
@@ -177,50 +177,51 @@
 
 <h2 id="一、VR配置"><a href="#一、VR配置" class="headerlink" title="一、VR配置"></a>一、VR配置</h2><p>以下以使用Oculus Quest2设备为例进行介绍。</p>
 <p>首先要使Quest2串连在电脑上，需要在[Oculus官网](<a href="https://www.oculus.com/rift/setup/" target="_blank" rel="noopener">Oculus Rift 设置 | Oculus</a>)下载Oculus Rift软件。</p>
+<p>![](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture/1748337-20210510131512244-2056254016.png)</p>
 <p>下载完毕后进行安装，如果想要安装在其他盘参考<a href="https://tieba.baidu.com/p/6567875018?red_tag=3406583513" target="_blank" rel="noopener">重要教程：教你如何把oculus电脑端应用安装在其他盘，而不是C盘_oculus吧_百度贴吧 (baidu.com)</a></p>
-<p>![](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\1748337-20210510131512244-2056254016.png)</p>
 <p>安装完毕后登录Oculus时需要facebook账号。（需要梯子）</p>
-<p>![](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910190625052.png)</p>
-<p>如果卡在这个页面的话参考<a href="https://blog.csdn.net/G0rgeoustray/article/details/111503152" target="_blank" rel="noopener">(5条消息) Oculus客户端无法登录的解决办法（2020.12.22）_Gorgeoustray-CSDN博客_oculus客户端一直转圈</a>![image-20210910190713914](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910190713914.png)</p>
+<p>![](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910190625052.png)</p>
+<p>如果卡在这个页面的话参考<a href="https://blog.csdn.net/G0rgeoustray/article/details/111503152" target="_blank" rel="noopener">(5条消息) Oculus客户端无法登录的解决办法（2020.12.22）_Gorgeoustray-CSDN博客_oculus客户端一直转圈</a></p>
+<p>![image-20210910190713914](\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910190713914.png)</p>
 <p>登录之后用有线的方式连接上你的Quest2后VR设备就配置好了。</p>
-<p>![image-20210910191008551](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910191008551.png)</p>
+<p>![image-20210910191008551](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910191008551.png)</p>
 <p>再下载好[SteamVR](<a href="https://www.steamvr.com/zh-cn/" target="_blank" rel="noopener">SteamVR - Valve Corporation</a>)，最基本的Quest2有线串流电脑就配置好了。</p>
 <h2 id="二、Untiy、VMT配置"><a href="#二、Untiy、VMT配置" class="headerlink" title="二、Untiy、VMT配置"></a>二、Untiy、VMT配置</h2><p>要驱动SteamVR以及Virtual Motion Capture（下称VMC），需要使用到Unity、Virtual Motion Tracker（下文简称VMT）。</p>
 <p>首先在[VMT官网](<a href="https://gpsnmeajp.github.io/VirtualMotionTrackerDocument/" target="_blank" rel="noopener">Top page - Virtual Motion Tracker (gpsnmeajp.github.io)</a>)下载VMT。</p>
-<p>![image-20210910192345885](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910192345885.png)</p>
+<p>![image-20210910192345885](\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910192345885.png)</p>
 <p>再根据官方文档配置好VMT。（可以将日文机翻成中文）</p>
-<p>![](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910192548606.png)</p>
+<p>![](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910192548606.png)</p>
 <p>参考官网的API页面，在Unity中导入uOSC的package。（本文使用Unity2020.3.17）</p>
-<p>![image-20210910194027386](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910194027386.png)</p>
+<p>![image-20210910194027386](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910194027386.png)</p>
 <p>再根据API页面的Advanced sample创建名为sendit的Script，并在场景中创建一个OSC Client（可以在uOSC文件夹里的example中的Scene中找到再复制粘贴），将sendit挂在OSC Client上。</p>
-<p>![image-20210910194932258](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910194932258.png)</p>
+<p>![image-20210910194932258](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910194932258.png)</p>
 <p><strong>下文假设你已采集身体骨骼数据（即动捕或直接文件输入骨骼数据）并能够将骨骼数据传入Unity驱动模型</strong></p>
 <p>使用公司动捕软件将数据导入Unity后能够实时驱动模型运动，此时将模型的头、双手、腰部、以及双脚绑定在sendit中。</p>
 <p>ZeroReference相当于是一个参考点，可以使用任意一个物体，这里为了方便直接使用OSC Client。</p>
-<p>![image-20210910200958536](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910200958536.png)</p>
+<p>![image-20210910200958536](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910200958536.png)</p>
 <p>将OSC Client的port改为39570，此时运行unity再打开steamVR，应该可以看到VMT的标志出现。</p>
-<p>![image-20210910201228930](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910201228930.png)</p>
-<p>![image-20210910201506677](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910201506677.png)</p>
+<p>![image-20210910201228930](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910201228930.png)</p>
+<p>![image-20210910201506677](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910201506677.png)</p>
 <p>VMT配置完成。</p>
 <h2 id="三、Virtual-Motion-Capture-VMC-配置"><a href="#三、Virtual-Motion-Capture-VMC-配置" class="headerlink" title="三、Virtual Motion Capture(VMC)配置"></a>三、Virtual Motion Capture(VMC)配置</h2><p>首先通过[VMC官网](<a href="https://vmc.info/" target="_blank" rel="noopener">VirtualMotionCapture | バーチャルモーションキャプチャー (vmc.info)</a>)在GitHub下载VMC软件。</p>
-<p>![image-20210910202222898](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910202222898.png)</p>
+<p>![image-20210910202222898](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910202222898.png)</p>
 <p>打开VMC软件。</p>
-<p>![image-20210910202515377](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910202515377.png)</p>
+<p>![image-20210910202515377](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910202515377.png)</p>
 <p>首先你需要一个VRM文件，VRM文件可以在[Vroid Hub](<a href="https://hub.vroid.com/en/" target="_blank" rel="noopener">VRoid Hub</a>)中下载。（本文使用Vroid Hub官方sample avatarB）</p>
-<p>![image-20210910203021325](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910203021325.png)</p>
+<p>![image-20210910203021325](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910203021325.png)</p>
 <p>点开详细设置，打开追踪器分配设置。</p>
-<p>![image-20210910203333535](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910203333535.png)</p>
+<p>![image-20210910203333535](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910203333535.png)</p>
 <p>这里头、双手、腰部、脚步分别与sendit脚本中的各个tracker的编号相对应。</p>
-<p>![image-20210910204424179](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910204424179.png)</p>
-<p>![image-20210910203649394](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910203649394.png)</p>
+<p>![image-20210910204424179](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910204424179.png)</p>
+<p>![image-20210910203649394](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910203649394.png)</p>
 <p>此时点击校准，并使Unity中的模型摆出T-pose。</p>
-<p>![image-20210910203021325](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910203021325.png)</p>
-<p>![image-20210910203906562](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910203906562.png)</p>
+<p>![image-20210910203021325](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910203021325.png)</p>
+<p>![image-20210910203906562](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910203906562.png)</p>
 <p>拖动OSC Client直到VMC中白色圆球与人物模型大致重合，点击校准模型。</p>
-<p>![image-20210910204108327](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910204108327.png)</p>
+<p>![image-20210910204108327](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910204108327.png)</p>
 <p>校准完成后就可以看到VMC中的模型和Unity中的模型做同样的动作了。</p>
-<p>![image-20210910205015726](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910205015726.png)</p>
-<p>![image-20210910205108038](D:\RhythMo\在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910205108038.png)</p>
+<p>![image-20210910205015726](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910205015726.png)</p>
+<p>![image-20210910205108038](在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture\image-20210910205108038.png)</p>
 <p>VMC配置完成。</p>
 <p>VMC在Beat Saber和LIV中的应用可以参考[官方文档](<a href="https://vmc.info/manual/" target="_blank" rel="noopener">マニュアル | バーチャルモーションキャプチャー (vmc.info)</a>)。</p>
 
