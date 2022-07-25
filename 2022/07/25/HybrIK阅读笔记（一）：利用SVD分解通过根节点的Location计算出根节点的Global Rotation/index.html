@@ -6,25 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://young2647.github.io">
-  <title>大学Unity游戏制作课程项目（二） | Young</title>
+  <title>HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation | Young</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Zombies In Castle肝了一周多终于搞出来的小project……仅供娱乐，动画实在是难做啊。加上了NavmeshAgent，与Player接触时就产生了一大堆奇奇怪怪的bug，也着实让我费了不少心思（最后还没搞好…… 总之这次是肝了一周，还是得提升代码技术免得debug时间太长…… GitHub地址：https:&#x2F;&#x2F;github.com&#x2F;Young2647&#x2F;Zombies-In-Cas">
+  <meta name="description" content="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation在阅读论文HybrIK时发现其通过SVD分解计算出根节点的Global Rotation的方法十分有趣，因此在此进行简单的记录，方便日后需要计算根节点Global Rotation的时候方便查看。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大学Unity游戏制作课程项目（二）">
-<meta property="og:url" content="https://young2647.github.io/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:title" content="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation">
+<meta property="og:url" content="https://young2647.github.io/2022/07/25/HybrIK%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%88%A9%E7%94%A8SVD%E5%88%86%E8%A7%A3%E9%80%9A%E8%BF%87%E6%A0%B9%E8%8A%82%E7%82%B9%E7%9A%84Location%E8%AE%A1%E7%AE%97%E5%87%BA%E6%A0%B9%E8%8A%82%E7%82%B9%E7%9A%84Global%20Rotation/index.html">
 <meta property="og:site_name" content="Young">
-<meta property="og:description" content="Zombies In Castle肝了一周多终于搞出来的小project……仅供娱乐，动画实在是难做啊。加上了NavmeshAgent，与Player接触时就产生了一大堆奇奇怪怪的bug，也着实让我费了不少心思（最后还没搞好…… 总之这次是肝了一周，还是得提升代码技术免得debug时间太长…… GitHub地址：https:&#x2F;&#x2F;github.com&#x2F;Young2647&#x2F;Zombies-In-Cas">
+<meta property="og:description" content="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation在阅读论文HybrIK时发现其通过SVD分解计算出根节点的Global Rotation的方法十分有趣，因此在此进行简单的记录，方便日后需要计算根节点Global Rotation的时候方便查看。">
 <meta property="og:locale" content="ch">
-<meta property="og:image" content="https://young2647.github.io/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/image-20201117234054759.png">
-<meta property="og:image" content="https://young2647.github.io/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/image-20201117234143940.png">
-<meta property="og:image" content="https://young2647.github.io/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/image-20201117233752870.png">
-<meta property="og:image" content="https://young2647.github.io/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/image-20201117233851821.png">
-<meta property="og:image" content="https://young2647.github.io/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/image-20201117233903436.png">
-<meta property="article:published_time" content="2020-11-17T15:28:12.136Z">
-<meta property="article:modified_time" content="2020-11-17T16:04:35.284Z">
+<meta property="article:published_time" content="2022-07-25T06:57:17.083Z">
+<meta property="article:modified_time" content="2022-07-25T07:02:05.248Z">
 <meta property="article:author" content="Red Young">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://young2647.github.io/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/image-20201117234054759.png">
   
     <link rel="alternative" href="/atom.xml" title="Young" type="application/atom+xml">
   
@@ -156,67 +150,33 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-大学Unity游戏制作课程项目（二）" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      大学Unity游戏制作课程项目（二）
+      HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation
     </h1>
   
 
         
-        <a href="/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2020-11-17T15:28:12.136Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-17</time>
+        <a href="/2022/07/25/HybrIK%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%88%A9%E7%94%A8SVD%E5%88%86%E8%A7%A3%E9%80%9A%E8%BF%87%E6%A0%B9%E8%8A%82%E7%82%B9%E7%9A%84Location%E8%AE%A1%E7%AE%97%E5%87%BA%E6%A0%B9%E8%8A%82%E7%82%B9%E7%9A%84Global%20Rotation/" class="archive-article-date">
+  	<time datetime="2022-07-25T06:57:17.083Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Zombies-In-Castle"><a href="#Zombies-In-Castle" class="headerlink" title="Zombies In Castle"></a>Zombies In Castle</h1><p>肝了一周多终于搞出来的小project……仅供娱乐，动画实在是难做啊。加上了NavmeshAgent，与Player接触时就产生了一大堆奇奇怪怪的bug，也着实让我费了不少心思（最后还没搞好……</p>
-<p>总之这次是肝了一周，还是得提升代码技术免得debug时间太长……</p>
-<p>GitHub地址：<a href="https://github.com/Young2647/Zombies-In-Castle" target="_blank" rel="noopener">https://github.com/Young2647/Zombies-In-Castle</a></p>
+        <h1 id="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global-Rotation"><a href="#HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global-Rotation" class="headerlink" title="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation"></a>HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation</h1><p>在阅读论文HybrIK时发现其通过SVD分解计算出根节点的Global Rotation的方法十分有趣，因此在此进行简单的记录，方便日后需要计算根节点Global Rotation的时候方便查看。</p>
 <a id="more"></a>
 
-<p><strong>游戏截图</strong></p>
-<img src="/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/image-20201117234054759.png" class="" title="image-20201117234054759">
-
-
-
-
-
-<img src="/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/image-20201117234143940.png" class="" title="image-20201117234143940">
-
-
-
-
-
-<img src="/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/image-20201117233752870.png" class="" title="image-20201117233752870">
-
-
-
-
-
-<img src="/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/image-20201117233851821.png" class="" title="image-20201117233851821">
-
-
-
-
-
-<img src="/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/image-20201117233903436.png" class="" title="image-20201117233903436">
-
-
-
-<p><strong>随便说说</strong></p>
-<p>才发现这个小project里面还蛮多东西的。</p>
-<p>–存档/读档系统（这玩意还挺容易出bug的，需要把所有东西都存下来还得初始化，或者说应该有更便捷的存档方法）</p>
-<p>–粒子系统（particle system确实蛮帅的，asset store针不戳）</p>
-<p>–初级动画（搞动画是真的肝）</p>
-<p>我居然还设计了一个小彩蛋（致敬2018我最爱的电影《头号玩家》），也算是一点给自己的所谓“作品”一点有趣的东西吧。</p>
-<p>写这个博客都是做完这个project的两周后了，期中考试告一段落后又得开始肝下一个project了  : (</p>
+<h2 id="Global-Rotation"><a href="#Global-Rotation" class="headerlink" title="Global Rotation"></a>Global Rotation</h2><p>要得到global rotation，就要通过根节点相对于rest pose中根节点的旋转来计算，以$t_1,t_2,t_3$表示rest pose中根关节的location，$p_1,p_2,p_3$表示预测location，$R_0$表示所要求的global rotation, $R_0$是一个正交矩阵<br>$$<br>R_0 = \arg min_{R\in SO^{3}} \sum_{i=1}^{3}||p_i - Rt_i||<em>2^2<br>$$<br>矩阵形式<br>$$<br>R_0 = \arg \min</em>{R\in SO^{3}}||P_0 - RT_0||_F^2<br>$$<br>其中 $||\ \cdot \ ||_F$表示Frobenius norm， $P_0$ 表示 [$p_0\ p_1\ p_2$],  $T_0$表示[$t_0\ t_1\ t_2$], 简化表达上式</p>
+<p>$$<br>min_{R\in SO^3}||P_0 - RT_0||<em>F^2\<br>\Leftrightarrow min</em>{R\in SO^3}\ trace((P_0 - RT_0)^T(P_0 - RT_0))\<br>\Leftrightarrow min_{R\in SO^3}\ trace(P_0^TP_0 + T_0^TT_0 - 2P_0^TRT_0)<br>$$<br>因此<br>$$<br>\arg \min_{R\in SO^{3}}||P_0 - RT_0||<em>F^2<br>\Leftrightarrow \arg \max</em>{R\in SO3} trace(P_0^TRT_0)<br>$$<br>通过矩阵的迹的性质<br>$$<br>trace(P_0^TRT_0) = trace(RT_0P_0^T)<br>$$<br>而$T_0, R_0$我们是已知的，因此对$T_0P_0^T$做<strong>SVD分解</strong>，得到<br>$$<br>T_0P_0^T = U \Lambda V^T<br>$$<br>那么这个问题便相当于<br>$$<br>\arg \max_{R\in SO^3} trace(RT_0P_0^T)\<br>\Leftrightarrow \arg \max_{R\in SO^3} trace(RU\Lambda V^T)\<br>\Leftrightarrow \arg \max_{R\in SO^3} trace(\Lambda V^T RU)<br>$$<br>通过<strong>SVM分解</strong>我们得到的$U,V$都为正交矩阵，而由前文我们知道$R$也是正交矩阵，因此令$M=V^TRU$</p>
+<p>也是正交矩阵，而正交矩阵的列向量与它的转置相乘结果为1，因此对于所有的$1 \leq j \leq 3$，我们都有<br>$$<br>m_j^Tm_j = 1 = \sum_{i=1}^3 m_{ij}^2\<br>\Rightarrow m_{ij}^2 \leq 1 \Rightarrow |m_{ij}| \leq 1<br>$$<br>而<strong>SVD分解</strong>中，$\Lambda$是对角矩阵，且其全部为非负值，因此<br>$$<br>\begin{aligned}<br>trace(\Lambda V^T RU) &amp;= trace(\Lambda M)\<br>                      &amp;= \sum_{i=1}^{3} \lambda_im_{ii} \leq \sum_{i=3}^{3}\lambda_i<br>\end{aligned}<br>$$<br>而我们的任务是要求得$R_0 = \arg \max_{R\in SO^3}trace(\Lambda V^T RU)$，那么当$m_{ii} = 1,\ \forall 1\leq i \leq 3$，我们可以得到</p>
+<p>$\max_{R\in SO^3}trace(\Lambda M) = \max_{R\in SO^3}trace(\Lambda V^T RU)$，则 $M = I$， $I$为单位矩阵，则我们可以得到最终要求的$R_0$，<br>$$<br>V^T R_0 U = I\<br>\Rightarrow R_0 = V U^T<br>$$<br>这样我们便得到了整个骨架根节点的global rotation，而接下来对于每一个关节我们便只需要计算出其local rotation，便可以得到整个骨架的Pose</p>
 
       
 
@@ -275,7 +235,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://young2647.github.io/2020/11/17/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://young2647.github.io/2022/07/25/HybrIK%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%88%A9%E7%94%A8SVD%E5%88%86%E8%A7%A3%E9%80%9A%E8%BF%87%E6%A0%B9%E8%8A%82%E7%82%B9%E7%9A%84Location%E8%AE%A1%E7%AE%97%E5%87%BA%E6%A0%B9%E8%8A%82%E7%82%B9%E7%9A%84Global%20Rotation/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -289,18 +249,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/12/01/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%B8%89%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          大学Unity游戏制作课程项目（三）
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/10/08/%E5%A4%A7%E5%AD%A6Unity%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%B8%80)/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">大学Unity游戏制作课程项目（一)</div>
+    <a href="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Unity驱动SteamVR及VMC</div>
       <i class="icon-circle-right"></i>
     </a>
   
