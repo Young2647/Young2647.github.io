@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="https://young2647.github.io">
   <title>HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation | Young</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation在阅读论文HybrIK时发现其通过SVD分解计算出根节点的Global Rotation的方法十分有趣，因此在此进行简单的记录，方便日后需要计算根节点Global Rotation的时候方便查看。">
+  <meta name="description" content="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation 在阅读论文HybrIK时发现其通过SVD分解计算出根节点的Global Rotation的方法十分有趣，因此在此进行简单的记录，方便日后需要计算根节点Global Rotation的时候方便查看。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation">
 <meta property="og:url" content="https://young2647.github.io/2022/07/25/HybrIK%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%88%A9%E7%94%A8SVD%E5%88%86%E8%A7%A3%E9%80%9A%E8%BF%87%E6%A0%B9%E8%8A%82%E7%82%B9%E7%9A%84Location%E8%AE%A1%E7%AE%97%E5%87%BA%E6%A0%B9%E8%8A%82%E7%82%B9%E7%9A%84Global%20Rotation/index.html">
 <meta property="og:site_name" content="Young">
-<meta property="og:description" content="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation在阅读论文HybrIK时发现其通过SVD分解计算出根节点的Global Rotation的方法十分有趣，因此在此进行简单的记录，方便日后需要计算根节点Global Rotation的时候方便查看。">
+<meta property="og:description" content="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation 在阅读论文HybrIK时发现其通过SVD分解计算出根节点的Global Rotation的方法十分有趣，因此在此进行简单的记录，方便日后需要计算根节点Global Rotation的时候方便查看。">
 <meta property="og:locale" content="ch">
 <meta property="article:published_time" content="2022-07-25T06:57:17.083Z">
 <meta property="article:modified_time" content="2022-07-25T07:02:05.248Z">
@@ -170,13 +170,44 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global-Rotation"><a href="#HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global-Rotation" class="headerlink" title="HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation"></a>HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation</h1><p>在阅读论文HybrIK时发现其通过SVD分解计算出根节点的Global Rotation的方法十分有趣，因此在此进行简单的记录，方便日后需要计算根节点Global Rotation的时候方便查看。</p>
+        <h1 id="hybrik阅读笔记一利用svd分解通过根节点的location计算出根节点的global-rotation">HybrIK阅读笔记（一）：利用SVD分解通过根节点的Location计算出根节点的Global Rotation</h1>
+<p>在阅读论文HybrIK时发现其通过SVD分解计算出根节点的Global Rotation的方法十分有趣，因此在此进行简单的记录，方便日后需要计算根节点Global Rotation的时候方便查看。</p>
 <a id="more"></a>
-
-<h2 id="Global-Rotation"><a href="#Global-Rotation" class="headerlink" title="Global Rotation"></a>Global Rotation</h2><p>要得到global rotation，就要通过根节点相对于rest pose中根节点的旋转来计算，以$t_1,t_2,t_3$表示rest pose中根关节的location，$p_1,p_2,p_3$表示预测location，$R_0$表示所要求的global rotation, $R_0$是一个正交矩阵<br>$$<br>R_0 = \arg min_{R\in SO^{3}} \sum_{i=1}^{3}||p_i - Rt_i||<em>2^2<br>$$<br>矩阵形式<br>$$<br>R_0 = \arg \min</em>{R\in SO^{3}}||P_0 - RT_0||_F^2<br>$$<br>其中 $||\ \cdot \ ||_F$表示Frobenius norm， $P_0$ 表示 [$p_0\ p_1\ p_2$],  $T_0$表示[$t_0\ t_1\ t_2$], 简化表达上式</p>
-<p>$$<br>min_{R\in SO^3}||P_0 - RT_0||<em>F^2\<br>\Leftrightarrow min</em>{R\in SO^3}\ trace((P_0 - RT_0)^T(P_0 - RT_0))\<br>\Leftrightarrow min_{R\in SO^3}\ trace(P_0^TP_0 + T_0^TT_0 - 2P_0^TRT_0)<br>$$<br>因此<br>$$<br>\arg \min_{R\in SO^{3}}||P_0 - RT_0||<em>F^2<br>\Leftrightarrow \arg \max</em>{R\in SO3} trace(P_0^TRT_0)<br>$$<br>通过矩阵的迹的性质<br>$$<br>trace(P_0^TRT_0) = trace(RT_0P_0^T)<br>$$<br>而$T_0, R_0$我们是已知的，因此对$T_0P_0^T$做<strong>SVD分解</strong>，得到<br>$$<br>T_0P_0^T = U \Lambda V^T<br>$$<br>那么这个问题便相当于<br>$$<br>\arg \max_{R\in SO^3} trace(RT_0P_0^T)\<br>\Leftrightarrow \arg \max_{R\in SO^3} trace(RU\Lambda V^T)\<br>\Leftrightarrow \arg \max_{R\in SO^3} trace(\Lambda V^T RU)<br>$$<br>通过<strong>SVM分解</strong>我们得到的$U,V$都为正交矩阵，而由前文我们知道$R$也是正交矩阵，因此令$M=V^TRU$</p>
-<p>也是正交矩阵，而正交矩阵的列向量与它的转置相乘结果为1，因此对于所有的$1 \leq j \leq 3$，我们都有<br>$$<br>m_j^Tm_j = 1 = \sum_{i=1}^3 m_{ij}^2\<br>\Rightarrow m_{ij}^2 \leq 1 \Rightarrow |m_{ij}| \leq 1<br>$$<br>而<strong>SVD分解</strong>中，$\Lambda$是对角矩阵，且其全部为非负值，因此<br>$$<br>\begin{aligned}<br>trace(\Lambda V^T RU) &amp;= trace(\Lambda M)\<br>                      &amp;= \sum_{i=1}^{3} \lambda_im_{ii} \leq \sum_{i=3}^{3}\lambda_i<br>\end{aligned}<br>$$<br>而我们的任务是要求得$R_0 = \arg \max_{R\in SO^3}trace(\Lambda V^T RU)$，那么当$m_{ii} = 1,\ \forall 1\leq i \leq 3$，我们可以得到</p>
-<p>$\max_{R\in SO^3}trace(\Lambda M) = \max_{R\in SO^3}trace(\Lambda V^T RU)$，则 $M = I$， $I$为单位矩阵，则我们可以得到最终要求的$R_0$，<br>$$<br>V^T R_0 U = I\<br>\Rightarrow R_0 = V U^T<br>$$<br>这样我们便得到了整个骨架根节点的global rotation，而接下来对于每一个关节我们便只需要计算出其local rotation，便可以得到整个骨架的Pose</p>
+<h2 id="global-rotation">Global Rotation</h2>
+<p>要得到global rotation，就要通过根节点相对于rest pose中根节点的旋转来计算，以<span class="math inline">\(t_1,t_2,t_3\)</span>表示rest pose中根关节的location，<span class="math inline">\(p_1,p_2,p_3\)</span>表示预测location，<span class="math inline">\(R_0\)</span>表示所要求的global rotation, <span class="math inline">\(R_0\)</span>是一个正交矩阵 <span class="math display">\[
+R_0 = \arg min_{R\in SO^{3}} \sum_{i=1}^{3}||p_i - Rt_i||_2^2
+\]</span> 矩阵形式 <span class="math display">\[
+R_0 = \arg \min_{R\in SO^{3}}||P_0 - RT_0||_F^2
+\]</span> 其中 <span class="math inline">\(||\ \cdot \ ||_F\)</span>表示Frobenius norm， <span class="math inline">\(P_0\)</span> 表示 [<span class="math inline">\(p_0\ p_1\ p_2\)</span>], <span class="math inline">\(T_0\)</span>表示[<span class="math inline">\(t_0\ t_1\ t_2\)</span>], 简化表达上式</p>
+<p><span class="math display">\[
+min_{R\in SO^3}||P_0 - RT_0||_F^2\\
+\Leftrightarrow min_{R\in SO^3}\ trace((P_0 - RT_0)^T(P_0 - RT_0))\\
+\Leftrightarrow min_{R\in SO^3}\ trace(P_0^TP_0 + T_0^TT_0 - 2P_0^TRT_0)
+\]</span> 因此 <span class="math display">\[
+\arg \min_{R\in SO^{3}}||P_0 - RT_0||_F^2
+\Leftrightarrow \arg \max_{R\in SO3} trace(P_0^TRT_0)
+\]</span> 通过矩阵的迹的性质 <span class="math display">\[
+trace(P_0^TRT_0) = trace(RT_0P_0^T)
+\]</span> 而<span class="math inline">\(T_0, R_0\)</span>我们是已知的，因此对<span class="math inline">\(T_0P_0^T\)</span>做<strong>SVD分解</strong>，得到 <span class="math display">\[
+T_0P_0^T = U \Lambda V^T
+\]</span> 那么这个问题便相当于 <span class="math display">\[
+\arg \max_{R\in SO^3} trace(RT_0P_0^T)\\
+\Leftrightarrow \arg \max_{R\in SO^3} trace(RU\Lambda V^T)\\
+\Leftrightarrow \arg \max_{R\in SO^3} trace(\Lambda V^T RU)
+\]</span> 通过<strong>SVM分解</strong>我们得到的<span class="math inline">\(U,V\)</span>都为正交矩阵，而由前文我们知道<span class="math inline">\(R\)</span>也是正交矩阵，因此令<span class="math inline">\(M=V^TRU\)</span></p>
+<p>也是正交矩阵，而正交矩阵的列向量与它的转置相乘结果为1，因此对于所有的<span class="math inline">\(1 \leq j \leq 3\)</span>，我们都有 <span class="math display">\[
+m_j^Tm_j = 1 = \sum_{i=1}^3 m_{ij}^2\\
+\Rightarrow m_{ij}^2 \leq 1 \Rightarrow |m_{ij}| \leq 1
+\]</span> 而<strong>SVD分解</strong>中，<span class="math inline">\(\Lambda\)</span>是对角矩阵，且其全部为非负值，因此 <span class="math display">\[
+\begin{aligned}
+trace(\Lambda V^T RU) &amp;= trace(\Lambda M)\\
+                      &amp;= \sum_{i=1}^{3} \lambda_im_{ii} \leq \sum_{i=3}^{3}\lambda_i
+\end{aligned}
+\]</span> 而我们的任务是要求得<span class="math inline">\(R_0 = \arg \max_{R\in SO^3}trace(\Lambda V^T RU)\)</span>，那么当<span class="math inline">\(m_{ii} = 1,\ \forall 1\leq i \leq 3\)</span>，我们可以得到</p>
+<p><span class="math inline">\(\max_{R\in SO^3}trace(\Lambda M) = \max_{R\in SO^3}trace(\Lambda V^T RU)\)</span>，则 <span class="math inline">\(M = I\)</span>， <span class="math inline">\(I\)</span>为单位矩阵，则我们可以得到最终要求的<span class="math inline">\(R_0\)</span>， <span class="math display">\[
+V^T R_0 U = I\\
+\Rightarrow R_0 = V U^T
+\]</span> 这样我们便得到了整个骨架根节点的global rotation，而接下来对于每一个关节我们便只需要计算出其local rotation，便可以得到整个骨架的Pose</p>
 
       
 

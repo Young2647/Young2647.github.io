@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="https://young2647.github.io">
   <title>Unity驱动SteamVR及VMC | Young</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion CaptureRedY2647  *本文假设使用者已采集身体骨骼数据（即动捕或直接文件输入骨骼数据）并能够将骨骼数据传入Unity驱动模型">
+  <meta name="description" content="在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture  RedY2647  *本文假设使用者已采集身体骨骼数据（即动捕或直接文件输入骨骼数据）并能够将骨骼数据传入Unity驱动模型">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unity驱动SteamVR及VMC">
 <meta property="og:url" content="https://young2647.github.io/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/index.html">
 <meta property="og:site_name" content="Young">
-<meta property="og:description" content="在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion CaptureRedY2647  *本文假设使用者已采集身体骨骼数据（即动捕或直接文件输入骨骼数据）并能够将骨骼数据传入Unity驱动模型">
+<meta property="og:description" content="在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture  RedY2647  *本文假设使用者已采集身体骨骼数据（即动捕或直接文件输入骨骼数据）并能够将骨骼数据传入Unity驱动模型">
 <meta property="og:locale" content="ch">
 <meta property="og:image" content="https://young2647.github.io/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/1748337-20210510131512244-2056254016.png">
 <meta property="og:image" content="https://young2647.github.io/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910190625052.png">
@@ -193,84 +193,62 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual-Motion-Capture"><a href="#在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual-Motion-Capture" class="headerlink" title="在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture"></a>在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture</h1><address>RedY2647</address>
-
-<p><strong>*本文假设使用者已采集身体骨骼数据（即动捕或直接文件输入骨骼数据）并能够将骨骼数据传入Unity驱动模型</strong></p>
+        <h1 id="在已有身体骨骼数据的情况下如何通过unity驱动steamvr以及virtual-motion-capture">在已有身体骨骼数据的情况下如何通过Unity驱动SteamVR以及Virtual Motion Capture</h1>
+<address>
+RedY2647
+</address>
+<p>*<strong>本文假设使用者已采集身体骨骼数据（即动捕或直接文件输入骨骼数据）并能够将骨骼数据传入Unity驱动模型</strong></p>
 <a id="more"></a>
-
-<h2 id="一、VR配置"><a href="#一、VR配置" class="headerlink" title="一、VR配置"></a>一、VR配置</h2><p>以下以使用Oculus Quest2设备为例进行介绍。</p>
+<h2 id="一vr配置">一、VR配置</h2>
+<p>以下以使用Oculus Quest2设备为例进行介绍。</p>
 <p>首先要使Quest2串连在电脑上，需要在<a href="(https://www.oculus.com/rift/setup/)">Oculus官网</a>下载Oculus Rift软件。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/1748337-20210510131512244-2056254016.png" class="">
-
 <p>下载完毕后进行安装，如果想要安装在其他盘参考<a href="https://tieba.baidu.com/p/6567875018?red_tag=3406583513" target="_blank" rel="noopener">重要教程：教你如何把oculus电脑端应用安装在其他盘，而不是C盘_oculus吧_百度贴吧 (baidu.com)</a></p>
 <p>安装完毕后登录Oculus时需要facebook账号。（需要梯子）</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910190625052.png" class="">
-
 <p>如果卡在这个页面的话参考<a href="https://blog.csdn.net/G0rgeoustray/article/details/111503152" target="_blank" rel="noopener">(5条消息) Oculus客户端无法登录的解决办法（2020.12.22）_Gorgeoustray-CSDN博客_oculus客户端一直转圈</a></p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910190713914.png" class="">
-
 <p>登录之后用有线的方式连接上你的Quest2后VR设备就配置好了。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910191008551.png" class="">
-
 <p>再下载好<a href="(https://www.steamvr.com/zh-cn/)">SteamVR</a>，最基本的Quest2有线串流电脑就配置好了。</p>
-<h2 id="二、Untiy、VMT配置"><a href="#二、Untiy、VMT配置" class="headerlink" title="二、Untiy、VMT配置"></a>二、Untiy、VMT配置</h2><p>要驱动SteamVR以及Virtual Motion Capture（下称VMC），需要使用到Unity、Virtual Motion Tracker（下文简称VMT）。</p>
+<h2 id="二untiyvmt配置">二、Untiy、VMT配置</h2>
+<p>要驱动SteamVR以及Virtual Motion Capture（下称VMC），需要使用到Unity、Virtual Motion Tracker（下文简称VMT）。</p>
 <p>首先在<a href="(https://gpsnmeajp.github.io/VirtualMotionTrackerDocument/)">VMT官网</a>下载VMT。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910192345885.png" class="">
-
 <p>再根据官方文档配置好VMT。（可以将日文机翻成中文）</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910192548606.png" class="">
-
 <p>参考官网的API页面，在Unity中导入uOSC的package。（本文使用Unity2020.3.17）</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910193949561.png" class="">
-
 <p>再根据API页面的Advanced sample创建名为sendit的Script，并在场景中创建一个OSC Client（可以在uOSC文件夹里的example中的Scene中找到再复制粘贴），将sendit挂在OSC Client上。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910194932258.png" class="">
-
 <p><strong>下文假设你已采集身体骨骼数据（即动捕或直接文件输入骨骼数据）并能够将骨骼数据传入Unity驱动模型</strong></p>
 <p>使用公司动捕软件将数据导入Unity后能够实时驱动模型运动，此时将模型的头、双手、腰部、以及双脚绑定在sendit中。</p>
 <p>ZeroReference相当于是一个参考点，可以使用任意一个物体，这里为了方便直接使用OSC Client。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910200958536.png" class="">
-
 <p>将OSC Client的port改为39570，此时运行unity再打开steamVR，应该可以看到VMT的标志出现。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910201228930.png" class="">
-
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910201506677.png" class="">
-
 <p>VMT配置完成。</p>
-<h2 id="三、Virtual-Motion-Capture-VMC-配置"><a href="#三、Virtual-Motion-Capture-VMC-配置" class="headerlink" title="三、Virtual Motion Capture(VMC)配置"></a>三、Virtual Motion Capture(VMC)配置</h2><p>首先通过<a href="(https://vmc.info/)">VMC官网</a>在GitHub下载VMC软件。</p>
+<h2 id="三virtual-motion-capturevmc配置">三、Virtual Motion Capture(VMC)配置</h2>
+<p>首先通过<a href="(https://vmc.info/)">VMC官网</a>在GitHub下载VMC软件。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910202222898.png" class="">
-
-
-
 <p>打开VMC软件。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910202515377.png" class="">
-
 <p>首先你需要一个VRM文件，VRM文件可以在<a href="(https://hub.vroid.com/en/)">Vroid Hub</a>中下载。（本文使用Vroid Hub官方sample avatarB）</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910203021325.png" class="">
-
 <p>点开详细设置，打开追踪器分配设置。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910203333535.png" class="">
-
 <p>这里头、双手、腰部、脚步分别与sendit脚本中的各个tracker的编号相对应。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910204424179.png" class="">
-
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910203649394.png" class="">
-
-
-
 <p>此时点击校准，并使Unity中的模型摆出T-pose。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910203021325.png" class="">
-
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910203906562.png" class="">
-
 <p>拖动OSC Client直到VMC中白色圆球与人物模型大致重合，点击校准模型。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910204108327.png" class="">
-
 <p>校准完成后就可以看到VMC中的模型和Unity中的模型做同样的动作了。</p>
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910205015726.png" class="">
-
 <img src="/2021/09/11/Unity%E9%A9%B1%E5%8A%A8SteamVR%E5%8F%8AVMC/image-20210910205108038.png" class="">
-
 <p>VMC配置完成。</p>
 <p>VMC在Beat Saber和LIV中的应用可以参考<a href="(https://vmc.info/manual/)">官方文档</a>。</p>
 
